@@ -12,6 +12,7 @@
   "license": "ISC",
   "devDependencies": {
     "@eslint/js": "^9.8.0",
+    "@happy-dom/global-registrator": "^14.12.3",
     "@testing-library/react-hooks": "^8.0.1",
     "@types/bun": "latest",
     "eslint": "9.x",
@@ -29,5 +30,9 @@
   },
   "lint-staged": {
     "!(.husky/*|bun*)": "prettier --write"
+  },
+  "dependencies": {
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/jest-dom": "^6.4.8"
   }
 }

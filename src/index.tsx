@@ -5,12 +5,16 @@ type EventBusContextType = {
   emit(event: string, payload?: unknown): void;
   listen(event: string, callback: (payload?: unknown) => void): () => void;
 };
-const globalEventBus = createEventBus();
+const globalEventBus = createEventBus("global");
 const EventBusContext = createContext<EventBusContextType>(globalEventBus);
 
-function createEventBus() {
+function createEventBus(name?: string) {
   const eventMap = new Map<string, ((payload?: unknown) => void)[]>();
   return {
+    /**
+     * For debug purpose
+     */
+    name,
     emit(event: string, payload?: unknown) {
       eventMap.get(event)?.forEach((callback) => callback(payload));
     },
@@ -24,14 +28,17 @@ function createEventBus() {
       return () => {
         eventMap.set(
           event,
-          eventMap.get(event)?.filter((item) => item !== callback) || []
+          eventMap.get(event)?.filter((item) => item !== callback) || [],
         );
       };
     },
   };
 }
 
-export function Provider({ children }: { children: ReactNode }) {
+/**
+ * Use this if you want an isolated event bus
+ */
+export function IsolatedBus({ children }: { children: ReactNode }) {
   const eventBusContext = useMemo(createEventBus, []);
   return (
     <EventBusContext.Provider value={eventBusContext}>
