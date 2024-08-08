@@ -1,46 +1,23 @@
 import { expect, test, mock } from "bun:test";
-import { batchDispatch } from "../src";
+import { renderHook } from "@testing-library/react-hooks";
+import { useEmit, useListen } from "../src";
+import { useEffect } from "react";
 
-test("batch should be called once", async () => {
-  const batch = mock(
-    (people: string[][]): Promise<{ [name: string]: number }> => {
-      return Promise.resolve(
-        people.reduce((acc, [name]) => {
-          return {
-            ...acc,
-            [name]: Math.floor(Math.random() * name.length),
-          };
-        }, {})
-      );
-    }
+test("should scan tn first", async () => {
+  const EVENT = "EVENT_AA";
+  const message = "hello_world";
+  const listener = mock(() => {});
+  renderHook(
+    () => {
+      const emit = useEmit();
+      useListen(EVENT, listener);
+      useEffect(() => {
+        console.log("call emit");
+        emit(EVENT, message);
+      }, []);
+    },
+    { initialProps: {} }
   );
-  const queryAge = batchDispatch(batch, (res, [name]) => res[name]);
-  await Promise.all(["Tom", "John"].map((man) => queryAge(man)));
-  expect(batch).toHaveBeenCalledTimes(1);
-});
-
-test("send 2 batch", async () => {
-  const batch = mock(
-    (people: string[][]): Promise<{ [name: string]: number }> => {
-      return Promise.resolve(
-        people.reduce((acc, [name]) => {
-          return {
-            ...acc,
-            [name]: Math.floor(Math.random() * name.length),
-          };
-        }, {})
-      );
-    }
-  );
-  const queryAge = batchDispatch(batch, (res, [name]) => res[name]);
-  const queue = [];
-  queue.push(queryAge("Tom"));
-  await new Promise((resolve) => {
-    process.nextTick(() => {
-      queue.push(queryAge("John"));
-      resolve(undefined);
-    });
-  });
-  await Promise.all(queue);
-  expect(batch).toHaveBeenCalledTimes(2);
+  console.log("ready to assert");
+  expect(listener).toBeCalledWith(message);
 });
