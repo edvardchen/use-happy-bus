@@ -1,19 +1,21 @@
 # React Event Bus
 
-Use event bus to communicate between siblings
+Use event bus to communicate between React siblings
 
 Why?
 
-- Children can communicate with each other without parent knowing and get rid of massive `onXXXX` props
-- Scalable
+- Children can communicate with each other without parent knowing
 - Suitable for apps without state management libray
+- Scalable and zero dependencies
 
-## Code
+The code is quite simple. Feel free to copy [it](./src/index.tsx) directly
+
+## Usage
 
 ```jsx
 import React, { useEffect } from "react";
 
-import { Provider, useEmit, useListen } from "PLZ_COPY_SOURCE_CODE";
+import { useEmit, useListen } from "PLZ_COPY_SOURCE_CODE";
 
 function ChildA() {
   const emit = useEmit();
@@ -35,11 +37,26 @@ function ChildB() {
 function Parent() {
   return (
     <>
-      <Provider>
-        <ChildA />
-        <ChildB />
-      </Provider>
+      <ChildA />
+      <ChildB />
     </>
+  );
+}
+```
+
+### Separate event bus
+
+If you want to isolate the scope of an event bus, use `IsolatedBus`. So that only the children of `IsolatedBus` can communicate with each other via event bus
+
+```jsx
+import { IsolatedBus } from "PLZ_COPY_SOURCE_CODE";
+
+function Parent() {
+  return (
+    <IsolatedBus>
+      <ChildA />
+      <ChildB />
+    </IsolatedBus>
   );
 }
 ```
