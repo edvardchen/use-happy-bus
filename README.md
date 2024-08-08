@@ -4,9 +4,9 @@ Use event bus to communicate between siblings
 
 Why?
 
-- Children can communicate with each other without parent knowing
+- Children can communicate with each other without parent knowing and get rid of massive `onXXXX` props
 - Scalable
-- Don't use this helper if you already have state management library
+- Suitable for apps without state management libray
 
 ## Code
 
