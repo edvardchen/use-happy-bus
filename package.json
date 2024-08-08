@@ -30,9 +30,5 @@
   },
   "lint-staged": {
     "!(.husky/*|bun*)": "prettier --write"
-  },
-  "dependencies": {
-    "@testing-library/dom": "^10.4.0",
-    "@testing-library/jest-dom": "^6.4.8"
   }
 }
