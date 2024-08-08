@@ -1,14 +1,14 @@
 # React Event Bus
 
-Use event bus to communicate between React siblings
+A React hook to empower React components to communicate with the siblings efficiently
 
 Why?
 
 - Children can communicate with each other without parent knowing
-- Suitable for apps without state management libray
+- Suitable for apps without state management libraries
 - Scalable and zero dependencies
 
-The code is quite simple. Feel free to copy [it](./src/index.tsx) directly
+The code is quite simple. Feel free to copy [it](./src/index.tsx) directly instead of installing via npm
 
 ## Usage
 
@@ -44,7 +44,7 @@ function Parent() {
 }
 ```
 
-### Separate event bus
+### Local event bus rather than global one
 
 If you want to isolate the scope of an event bus, use `IsolatedBus`. So that only the children of `IsolatedBus` can communicate with each other via event bus
 
