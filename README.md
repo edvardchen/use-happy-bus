@@ -1,4 +1,4 @@
-# React Event Bus
+# Use-Happy-Bus
 
 A React hook to empower React components to communicate with the siblings efficiently
 
@@ -15,7 +15,7 @@ The code is quite simple. Feel free to copy [it](./src/index.tsx) directly inste
 ```jsx
 import React, { useEffect } from "react";
 
-import { useEmit, useListen } from "PLZ_COPY_SOURCE_CODE";
+import { useEmit, useListen } from "use-happy-bus";
 
 function ChildA() {
   const emit = useEmit();
@@ -49,7 +49,7 @@ function Parent() {
 If you want to isolate the scope of an event bus, use `IsolatedBus`. So that only the children of `IsolatedBus` can communicate with each other via event bus
 
 ```jsx
-import { IsolatedBus } from "PLZ_COPY_SOURCE_CODE";
+import { IsolatedBus } from "use-happy-bus";
 
 function Parent() {
   return (

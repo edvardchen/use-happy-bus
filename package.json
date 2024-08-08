@@ -1,7 +1,7 @@
 {
-  "name": "react-event-bus",
+  "name": "use-happy-bus",
   "version": "0.1.0",
-  "description": "Use event bus to communicate between siblings",
+  "description": "A React hook to empower React components to communicate with the siblings efficiently",
   "main": "src/index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
